@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, ButtonGroup, Container, Table } from "reactstrap";
+import { Button, Container, Table } from "reactstrap";
 import AppNavbar from "./AppNavbar";
 import { Link } from "react-router-dom";
 
@@ -7,7 +7,7 @@ class EmployeeList extends Component {
   constructor(props) {
     super(props);
     this.state = { employees: [], isLoading: true };
-    this.remove = this.remove.bind(this);
+    // this.remove = this.remove.bind(this);
   }
 
   componentDidMount() {
@@ -17,18 +17,18 @@ class EmployeeList extends Component {
       .then(response => response.json())
       .then(data => this.setState({ employees: data, isLoading: false }));
   }
-  async remove(id) {
-    await fetch(`/api/employee/${id}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    }).then(() => {
-      let updatedCars = [...this.state.employees].filter(i => i.id !== id);
-      this.setState({ employees: updatedCars });
-    });
-  }
+  //   async remove(id) {
+  //     await fetch(`/api/employee/${id}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json"
+  //       }
+  //     }).then(() => {
+  //       let updatedCars = [...this.state.employees].filter(i => i.id !== id);
+  //       this.setState({ employees: updatedCars });
+  //     });
+  //   }
   render() {
     const { employees, isLoading } = this.state;
 
@@ -44,23 +44,23 @@ class EmployeeList extends Component {
           <td>{employee.experienceInCompany}</td>
           <td>{employee.id_role}</td>
           <td>
-            <ButtonGroup>
-              <Button
-                size="sm"
-                color="primary"
-                tag={Link}
-                to={"/employees/" + employee.id}
-              >
-                Edit
-              </Button>
-              <Button
+            {/* <ButtonGroup> */}
+            <Button
+              size="md"
+              color="primary"
+              tag={Link}
+              to={"/employees/" + employee.id}
+            >
+              Edit
+            </Button>
+            {/* <Button
                 size="sm"
                 color="danger"
                 onClick={() => this.remove(employee.id)}
               >
                 Delete
-              </Button>
-            </ButtonGroup>
+              </Button> */}
+            {/* </ButtonGroup> */}
           </td>
         </tr>
       );
