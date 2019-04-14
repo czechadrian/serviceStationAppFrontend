@@ -13,6 +13,9 @@ class Home extends Component {
           <Button color="link">
             <Link to="/cars">Car service app</Link>
           </Button>
+          <Button color="link">
+            <Link to="/employees">Employees service app</Link>
+          </Button>
         </Container>
       </div>
     );
