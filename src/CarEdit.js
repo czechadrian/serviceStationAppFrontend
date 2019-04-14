@@ -3,13 +3,15 @@ import { Link, withRouter } from "react-router-dom";
 import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import AppNavbar from "./AppNavbar";
 
-class CarEdit extends Component {
+class GroupEdit extends Component {
   emptyItem = {
-    // id_owner: '',
     model: "",
     brand: "",
-    registration_number: ""
+    registrationNumber: "",
+    client: "",
+    phoneNumber: ""
   };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,14 +20,16 @@ class CarEdit extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   async componentDidMount() {
     if (this.props.match.params.id !== "new") {
       const car = await (await fetch(
-        "/car/${this.props.match.params.id}"
+        `/api/car/${this.props.match.params.id}`
       )).json();
       this.setState({ item: car });
     }
   }
+
   handleChange(event) {
     const target = event.target;
     const value = target.value;
@@ -38,7 +42,8 @@ class CarEdit extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const { item } = this.state;
-    await fetch("/car", {
+
+    await fetch("/api/car", {
       method: item.id ? "PUT" : "POST",
       headers: {
         Accept: "application/json",
@@ -48,6 +53,7 @@ class CarEdit extends Component {
     });
     this.props.history.push("/cars");
   }
+
   render() {
     const { item } = this.state;
     const title = <h2>{item.id ? "Edit Car" : "Add Car"}</h2>;
@@ -81,21 +87,43 @@ class CarEdit extends Component {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="registration_number">Registration Number</Label>
+              <Label for="registrationNumber">Registration Number</Label>
               <Input
                 type="text"
-                name="registration_number"
-                id="registration_number"
-                value={item.registration_number || ""}
+                name="registrationNumber"
+                id="registrationNumber"
+                value={item.registrationNumber || ""}
                 onChange={this.handleChange}
-                autoComplete="registration_number-level1"
+                autoComplete="registrationNumber"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="phoneNumber">Phone Number</Label>
+              <Input
+                type="value"
+                name="phoneNumber"
+                id="phoneNumber"
+                value={item.phoneNumber || ""}
+                onChange={this.handleChange}
+                autoComplete="phoneNumber"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="client">Client</Label>
+              <Input
+                type="text"
+                name="client"
+                id="client"
+                value={item.client || ""}
+                onChange={this.handleChange}
+                autoComplete="client"
               />
             </FormGroup>
             <FormGroup>
               <Button color="primary" type="submit">
                 Save
               </Button>{" "}
-              <Button color="secondary" tag={Link} to="/groups">
+              <Button color="secondary" tag={Link} to="/cars">
                 Cancel
               </Button>
             </FormGroup>
@@ -106,4 +134,4 @@ class CarEdit extends Component {
   }
 }
 
-export default withRouter(CarEdit);
+export default withRouter(GroupEdit);

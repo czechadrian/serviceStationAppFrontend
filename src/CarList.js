@@ -18,7 +18,7 @@ class CarList extends Component {
       .then(data => this.setState({ cars: data, isLoading: false }));
   }
   async remove(id) {
-    await fetch(`/api/cars/${id}`, {
+    await fetch(`/api/car/${id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -36,13 +36,13 @@ class CarList extends Component {
       return <p>Loading...</p>;
     }
     const carList = cars.map(car => {
-      const information = `${car.model || ""} ${car.brand ||
-        ""} ${car.registration_number || ""}`;
       return (
         <tr key={car.id}>
           <td style={{ whiteSpace: "nowrap" }}>{car.model}</td>
           <td>{car.brand}</td>
-          <td>{car.registration_number}</td>
+          <td>{car.registrationNumber}</td>
+          <td>{car.phoneNumber}</td>
+          <td>{car.client}</td>
           <td>
             <ButtonGroup>
               <Button
@@ -80,7 +80,9 @@ class CarList extends Component {
               <tr>
                 <th width="20%">Model</th>
                 <th width="20%">Brand</th>
-                <th>registration_number</th>
+                <th>Registration Number</th>
+                <th width="10%">Phone Number</th>
+                <th width="10%">Client</th>
                 <th width="10%">Actions</th>
               </tr>
             </thead>
