@@ -42,7 +42,7 @@ class EmployeeList extends Component {
           <td>{employee.surname}</td>
           <td>{employee.experience}</td>
           <td>{employee.experienceInCompany}</td>
-          <td>{employee.id_role}</td>
+          <td>{employee.role}</td>
           <td>
             {/* <ButtonGroup> */}
             <Button
@@ -82,7 +82,7 @@ class EmployeeList extends Component {
                 <th width="25%">Surname</th>
                 <th width="20%">experience</th>
                 <th width="20%">experienceInCompany</th>
-                <th width="10%">id_role</th>
+                <th width="10%">role</th>
               </tr>
             </thead>
             <tbody>{employeeList}</tbody>

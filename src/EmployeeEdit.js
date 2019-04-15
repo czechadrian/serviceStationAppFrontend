@@ -9,7 +9,10 @@ class EmployeeEdit extends Component {
     surname: "",
     experience: "",
     experienceInCompany: "",
-    id_role: ""
+    role: "",
+    idRole: "",
+    login: "",
+    password: ""
   };
 
   constructor(props) {
@@ -43,7 +46,7 @@ class EmployeeEdit extends Component {
     event.preventDefault();
     const { item } = this.state;
 
-    await fetch("/api/car", {
+    await fetch("/api/employee", {
       method: item.id ? "PUT" : "POST",
       headers: {
         Accept: "application/json",
@@ -109,14 +112,36 @@ class EmployeeEdit extends Component {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="id_role">Id role</Label>
+              <Label for="idRole">Id role</Label>
               <Input
                 type="text"
-                name="id_role"
-                id="id_role"
-                value={item.id_role || ""}
+                name="idRole"
+                id="idRole"
+                value={item.idRole || ""}
                 onChange={this.handleChange}
-                autoComplete="id_role"
+                autoComplete="idRole"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="login">Login</Label>
+              <Input
+                type="text"
+                name="login"
+                id="login"
+                value={item.login || ""}
+                onChange={this.handleChange}
+                autoComplete="login"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="password">Password</Label>
+              <Input
+                type="text"
+                name="password"
+                id="password"
+                value={item.password || ""}
+                onChange={this.handleChange}
+                autoComplete="password"
               />
             </FormGroup>
             <FormGroup>
