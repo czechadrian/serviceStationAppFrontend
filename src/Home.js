@@ -38,11 +38,14 @@ class Home extends Component {
     window.location.href = "//" + window.location.hostname + port + "/private";
   }
 
+<<<<<<< HEAD
   logout() {
     this.setState({ isAuthenticated: false });
     this.state.csrfToken = "";
   }
 
+=======
+>>>>>>> 324938f43c85887f54a569f8800bdc76fb3b5f66
   render() {
     const message = this.state.user ? (
       <h2>Welcome, {this.state.user.name}!</h2>
