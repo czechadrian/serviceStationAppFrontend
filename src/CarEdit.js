@@ -9,7 +9,9 @@ class GroupEdit extends Component {
     brand: "",
     registrationNumber: "",
     client: "",
-    phoneNumber: ""
+    phoneNumber: "",
+    damage: "",
+    amendments: ""
   };
 
   constructor(props) {
@@ -117,6 +119,28 @@ class GroupEdit extends Component {
                 value={item.client || ""}
                 onChange={this.handleChange}
                 autoComplete="client"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="damage">Damage</Label>
+              <Input
+                type="textarea"
+                name="damage"
+                id="damage"
+                value={item.damage || ""}
+                onChange={this.handleChange}
+                autoComplete="damage"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="amendments">Amendments</Label>
+              <Input
+                type="textarea"
+                name="amendments"
+                id="amendments"
+                value={item.amendments || ""}
+                onChange={this.handleChange}
+                autoComplete="amendments"
               />
             </FormGroup>
             <FormGroup>
