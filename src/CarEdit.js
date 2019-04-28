@@ -121,28 +121,7 @@ class GroupEdit extends Component {
                 autoComplete="client"
               />
             </FormGroup>
-            <FormGroup>
-              <Label for="damage">Damage</Label>
-              <Input
-                type="textarea"
-                name="damage"
-                id="damage"
-                value={item.damage || ""}
-                onChange={this.handleChange}
-                autoComplete="damage"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="amendments">Amendments</Label>
-              <Input
-                type="textarea"
-                name="amendments"
-                id="amendments"
-                value={item.amendments || ""}
-                onChange={this.handleChange}
-                autoComplete="amendments"
-              />
-            </FormGroup>
+
             <FormGroup>
               <Button color="primary" type="submit">
                 Save
