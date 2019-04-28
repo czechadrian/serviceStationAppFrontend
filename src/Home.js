@@ -9,7 +9,11 @@ class Home extends Component {
   state = {
     isLoading: true,
     isAuthenticated: false,
-    user: undefined
+    user: undefined,
+    isManager: false,
+    isLogistician: false,
+    isAccountant: false,
+    isMechanic: false
   };
 
   constructor(props) {
@@ -21,12 +25,21 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    const response = await fetch("/api/employees", { credentials: "include" });
+    const response = await fetch("/api/login", { credentials: "include" });
     const body = await response.text();
     if (body === "") {
       this.setState({ isAuthenticated: false });
     } else {
       this.setState({ isAuthenticated: true, user: JSON.parse(body) });
+      if (this.state.user.role === "Manager") {
+        this.setState({ isManager: true });
+      } else if (this.state.user.role === "Logistician") {
+        this.setState({ isLogistician: true });
+      } else if (this.state.user.role === "Accountant") {
+        this.setState({ isAccountant: true });
+      } else if (this.state.user.role === "Mechanic") {
+        this.setState({ isMechanic: true });
+      }
     }
   }
 
@@ -45,12 +58,12 @@ class Home extends Component {
 
   render() {
     const message = this.state.user ? (
-      <h2>Welcome, {this.state.user.name}!</h2>
+      <h2>Welcome, {this.state.user.role}!</h2>
     ) : (
       <p>Please log in to Service Station App.</p>
     );
 
-    const button = this.state.isAuthenticated ? (
+    const manager = this.state.isManager ? (
       <div>
         <Button color="link">
           <Link to="/cars">Car service app</Link>
@@ -58,6 +71,27 @@ class Home extends Component {
         <Button color="link">
           <Link to="/employees">Employees service app</Link>
         </Button>
+      </div>
+    ) : (
+      <div />
+    );
+
+    const logistician = this.state.isLogistician ? (
+      <div>
+        <Button color="link">
+          <Link to="/cars">Car service app</Link>
+        </Button>
+      </div>
+    ) : (
+      <div />
+    );
+
+    const accountant = this.state.isAccountant ? <div /> : <div />;
+
+    const mechanic = this.state.isMechanic ? <div /> : <div />;
+
+    const button = this.state.isAuthenticated ? (
+      <div>
         <Button color="primary" onClick={this.logout}>
           Logout
         </Button>
@@ -73,6 +107,10 @@ class Home extends Component {
         <AppNavbar />
         <Container fluid>
           {message}
+          {manager}
+          {accountant}
+          {logistician}
+          {mechanic}
           {button}
         </Container>
       </div>
