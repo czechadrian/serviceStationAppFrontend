@@ -4,7 +4,6 @@ import Home from "./Home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import CarList from "./CarList";
 import CarEdit from "./CarEdit";
-import { CookiesProvider } from "react-cookie";
 import EmployeeList from "./EmployeeList";
 import EmployeeEdit from "./EmployeeEdit";
 

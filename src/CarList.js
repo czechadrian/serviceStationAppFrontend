@@ -8,7 +8,7 @@ import "./App.css";
 class CarList extends Component {
   constructor(props) {
     super(props);
-    this.state = { cars: [], isLoading: true };
+    this.state = { cars: [], isLoading: true, repairs: [] };
     this.remove = this.remove.bind(this);
   }
 
@@ -18,6 +18,10 @@ class CarList extends Component {
     fetch("api/cars")
       .then(response => response.json())
       .then(data => this.setState({ cars: data, isLoading: false }));
+
+    fetch("api/repairs")
+      .then(response => response.json())
+      .then(dataRepairs => this.setState({ repairs: dataRepairs }));
   }
   async remove(id) {
     await fetch(`/api/car/${id}`, {
@@ -32,13 +36,31 @@ class CarList extends Component {
     });
   }
   render() {
-    const { cars, isLoading } = this.state;
+    const { cars, repairs, isLoading } = this.state;
 
     if (isLoading) {
       return <p>Loading...</p>;
     }
 
     const carList = cars.map(car => {
+      let repairData = "";
+      let repairCar = "";
+      let repairUser = "";
+      let sparesCosts = "";
+      let serviceCosts = "";
+      const repairNote = repairs.map(repair => {
+        let repairInformation = "";
+        if (repair.numberCar == car.registrationNumber) {
+          repairInformation = repair.note;
+          repairData = repair.data;
+          repairCar = repair.numberCar;
+          repairUser = repair.nameUser;
+          sparesCosts = repair.sparesCosts;
+          serviceCosts = repair.serviceCosts;
+        }
+        return repairInformation;
+      });
+
       return (
         <tr key={car.id}>
           <td style={{ whiteSpace: "nowrap" }}>{car.model}</td>
@@ -59,14 +81,21 @@ class CarList extends Component {
                   <a className="close" onClick={close}>
                     &times;
                   </a>
-                  <div className="header"> Damage/Amendments </div>
+                  <div className="header"> All information </div>
                   <div className="content">
                     {" "}
-                    <h1>Damage</h1>
-                    <div className="textFrame">{car.damage}</div>
-                    <h1>Amendments</h1>
-                    <br />
-                    <div className="textFrame">{car.amendments}</div>
+                    <h1>Note</h1>
+                    <div className="textFrame">{repairNote}</div>
+                    <h1>Data</h1>
+                    <div className="textFrame">{repairData}</div>
+                    <h1>NumberCar</h1>
+                    <div className="textFrame">{repairCar}</div>
+                    <h1>NameUser</h1>
+                    <div className="textFrame">{repairUser}</div>
+                    <h1>SpacerCosts</h1>
+                    <div className="textFrame">{sparesCosts}</div>
+                    <h1>ServiceCosts</h1>
+                    <div className="textFrame">{serviceCosts}</div>
                   </div>
                   <div className="actions">
                     <Button
