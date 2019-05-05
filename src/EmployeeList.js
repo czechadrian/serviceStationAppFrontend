@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Container, Table } from "reactstrap";
 import AppNavbar from "./AppNavbar";
 import { Link } from "react-router-dom";
+import Popup from "reactjs-popup";
 
 class EmployeeList extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class EmployeeList extends Component {
     this.state = {
       whichOne: "",
       employees: [],
+      appointments: [],
       isLoading: true
     };
   }
@@ -33,6 +35,12 @@ class EmployeeList extends Component {
       .then(response => response.json())
       .then(data => this.setState({ employees: data, isLoading: false }));
 
+    fetch("api/appointments")
+      .then(response => response.json())
+      .then(dataAppointments =>
+        this.setState({ appointments: dataAppointments })
+      );
+
     // fetch("api/employees/mechanics")
     //   .then(response => response.json())
     //   .then(data => this.setState({ mechanics: data }));
@@ -50,11 +58,12 @@ class EmployeeList extends Component {
     //   .then(data => this.setState({ accountants: data, isLoading: false }));
   }
   render() {
-    const { employees, isLoading } = this.state;
+    const { employees, appointments, isLoading } = this.state;
 
     if (isLoading) {
       return <p>Loading...</p>;
     }
+
     const accountantList = employees.map(accountant => {
       if (accountant.role == "Accountant")
         return (
@@ -145,6 +154,20 @@ class EmployeeList extends Component {
         );
     });
     const employeeList = employees.map(employee => {
+      let appointmentUser = "";
+      let appointmentCar = "";
+      let appointmentData = "";
+      let appointmentDescription = "";
+      const appointmentNote = appointments.map(appointment => {
+        let appointmentInformation = "";
+        if (appointment.nameUser == employee.surname) {
+          appointmentDescription = appointment.description;
+          appointmentData = appointment.data;
+          appointmentCar = appointment.numberCar;
+          appointmentUser = appointment.nameUser;
+        }
+        return appointmentInformation;
+      });
       return (
         <tr key={employee.id}>
           <td style={{ whiteSpace: "nowrap" }}>{employee.name}</td>
@@ -152,6 +175,59 @@ class EmployeeList extends Component {
           <td>{employee.experience}</td>
           <td>{employee.experienceInCompany}</td>
           <td>{employee.role}</td>
+          <td>
+            {" "}
+            <Popup
+              trigger={
+                <Button color="info" className="button">
+                  {" "}
+                  Show Information{" "}
+                </Button>
+              }
+              modal
+            >
+              {close => (
+                <div className="carPopup">
+                  <a className="close" onClick={close}>
+                    &times;
+                  </a>
+                  <div className="header"> Employee Information </div>
+                  <div className="content">
+                    {" "}
+                    <h1>Name</h1>
+                    <div className="textFrame">{employee.name}</div>
+                    <h1>Surname</h1>
+                    <div className="textFrame">{employee.surname}</div>
+                    <h1>Experience</h1>
+                    <div className="textFrame">{employee.experience}</div>
+                    <h1>ExperienceInCompany</h1>
+                    <div className="textFrame">
+                      {employee.experienceInCompany}
+                    </div>
+                    <h1>Role</h1>
+                    <div className="textFrame">{employee.role}</div>
+                    <h1>Appointments</h1>
+                    <h1>Appointment information</h1>
+                    <div className="textFrame">
+                      {appointmentCar} {appointmentData}{" "}
+                      {appointmentDescription}
+                    </div>
+                  </div>
+                  <div className="actions">
+                    <Button
+                      className="button"
+                      onClick={() => {
+                        console.log("popup windows closed ");
+                        close();
+                      }}
+                    >
+                      Close popup window
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </Popup>
+          </td>
           <td>
             <Button
               size="md"
