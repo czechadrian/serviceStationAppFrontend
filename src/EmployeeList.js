@@ -11,7 +11,8 @@ class EmployeeList extends Component {
       whichOne: "",
       employees: [],
       appointments: [],
-      isLoading: true
+      isLoading: true,
+      period: ""
     };
   }
 
@@ -64,8 +65,57 @@ class EmployeeList extends Component {
       return <p>Loading...</p>;
     }
 
+    const dateToFormat = new Date();
+    var weekStamp = new Date().getTime() + 7 * 24 * 60 * 60 * 1000;
+    var monthStamp = new Date().getTime() + 30 * 24 * 60 * 60 * 1000;
+    var yearStamp = new Date().getTime() + 365 * 24 * 60 * 60 * 1000;
+
     const accountantList = employees.map(accountant => {
-      if (accountant.role == "Accountant")
+      let appointmentWeekly = "";
+      let appointmentMonthly = "";
+      let appointmentAnnual = "";
+      if (accountant.role === "Accountant") {
+        const appointmentNote = appointments.map(appointment => {
+          let appointmentInformation = "";
+          let d = new Date(appointment.data);
+          if (appointment.nameUser === accountant.surname) {
+            if (d >= dateToFormat && d <= weekStamp) {
+              appointmentWeekly +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+            if (d >= dateToFormat && d <= monthStamp) {
+              appointmentMonthly +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+            if (d >= dateToFormat && d <= yearStamp) {
+              appointmentAnnual +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+          }
+          return appointmentInformation;
+        });
+
         return (
           <tr key={accountant.id}>
             <td style={{ whiteSpace: "nowrap" }}>{accountant.name}</td>
@@ -73,6 +123,161 @@ class EmployeeList extends Component {
             <td>{accountant.experience}</td>
             <td>{accountant.experienceInCompany}</td>
             <td>{accountant.role}</td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Weekly Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Weekly Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentWeekly}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Monthly Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Monthly Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentMonthly}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Annual Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Annual Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentAnnual}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              {" "}
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Show Information{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Employee Information </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Name</h1>
+                      <div className="textFrame">{accountant.name}</div>
+                      <h1>Surname</h1>
+                      <div className="textFrame">{accountant.surname}</div>
+                      <h1>Experience</h1>
+                      <div className="textFrame">{accountant.experience}</div>
+                      <h1>ExperienceInCompany</h1>
+                      <div className="textFrame">
+                        {accountant.experienceInCompany}
+                      </div>
+                      <h1>Role</h1>
+                      <div className="textFrame">{accountant.role}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
             <td>
               <Button
                 size="md"
@@ -85,9 +290,54 @@ class EmployeeList extends Component {
             </td>
           </tr>
         );
+      }
     });
     const logisticianList = employees.map(logistician => {
-      if (logistician.role == "Logistician")
+      let appointmentWeekly = "";
+      let appointmentMonthly = "";
+      let appointmentAnnual = "";
+      if (logistician.role === "Logistician") {
+        const appointmentNote = appointments.map(appointment => {
+          let appointmentInformation = "";
+          let d = new Date(appointment.data);
+          if (appointment.nameUser === logistician.surname) {
+            if (d >= dateToFormat && d <= weekStamp) {
+              appointmentWeekly +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+            if (d >= dateToFormat && d <= monthStamp) {
+              appointmentMonthly +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+            if (d >= dateToFormat && d <= yearStamp) {
+              appointmentAnnual +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+          }
+          return appointmentInformation;
+        });
+
         return (
           <tr key={logistician.id}>
             <td style={{ whiteSpace: "nowrap" }}>{logistician.name}</td>
@@ -95,6 +345,161 @@ class EmployeeList extends Component {
             <td>{logistician.experience}</td>
             <td>{logistician.experienceInCompany}</td>
             <td>{logistician.role}</td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Weekly Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Weekly Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentWeekly}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Monthly Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Monthly Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentMonthly}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Annual Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Annual Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentAnnual}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              {" "}
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Show Information{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Employee Information </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Name</h1>
+                      <div className="textFrame">{logistician.name}</div>
+                      <h1>Surname</h1>
+                      <div className="textFrame">{logistician.surname}</div>
+                      <h1>Experience</h1>
+                      <div className="textFrame">{logistician.experience}</div>
+                      <h1>ExperienceInCompany</h1>
+                      <div className="textFrame">
+                        {logistician.experienceInCompany}
+                      </div>
+                      <h1>Role</h1>
+                      <div className="textFrame">{logistician.role}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
             <td>
               <Button
                 size="md"
@@ -107,10 +512,55 @@ class EmployeeList extends Component {
             </td>
           </tr>
         );
+      }
     });
 
     const mechanicList = employees.map(mechanic => {
-      if (mechanic.role == "Mechanic")
+      let appointmentWeekly = "";
+      let appointmentMonthly = "";
+      let appointmentAnnual = "";
+      if (mechanic.role === "Mechanic") {
+        const appointmentNote = appointments.map(appointment => {
+          let appointmentInformation = "";
+          let d = new Date(appointment.data);
+          if (appointment.nameUser === mechanic.surname) {
+            if (d >= dateToFormat && d <= weekStamp) {
+              appointmentWeekly +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+            if (d >= dateToFormat && d <= monthStamp) {
+              appointmentMonthly +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+            if (d >= dateToFormat && d <= yearStamp) {
+              appointmentAnnual +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+          }
+          return appointmentInformation;
+        });
+
         return (
           <tr key={mechanic.id}>
             <td style={{ whiteSpace: "nowrap" }}>{mechanic.name}</td>
@@ -118,6 +568,161 @@ class EmployeeList extends Component {
             <td>{mechanic.experience}</td>
             <td>{mechanic.experienceInCompany}</td>
             <td>{mechanic.role}</td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Weekly Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Weekly Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentWeekly}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Monthly Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Monthly Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentMonthly}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Annual Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Annual Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentAnnual}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              {" "}
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Show Information{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Employee Information </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Name</h1>
+                      <div className="textFrame">{mechanic.name}</div>
+                      <h1>Surname</h1>
+                      <div className="textFrame">{mechanic.surname}</div>
+                      <h1>Experience</h1>
+                      <div className="textFrame">{mechanic.experience}</div>
+                      <h1>ExperienceInCompany</h1>
+                      <div className="textFrame">
+                        {mechanic.experienceInCompany}
+                      </div>
+                      <h1>Role</h1>
+                      <div className="textFrame">{mechanic.role}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
             <td>
               <Button
                 size="md"
@@ -130,9 +735,54 @@ class EmployeeList extends Component {
             </td>
           </tr>
         );
+      }
     });
     const managerList = employees.map(manager => {
-      if (manager.role == "Manager")
+      let appointmentWeekly = "";
+      let appointmentMonthly = "";
+      let appointmentAnnual = "";
+      if (manager.role === "Manager") {
+        const appointmentNote = appointments.map(appointment => {
+          let appointmentInformation = "";
+          let d = new Date(appointment.data);
+          if (appointment.nameUser === manager.surname) {
+            if (d >= dateToFormat && d <= weekStamp) {
+              appointmentWeekly +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+            if (d >= dateToFormat && d <= monthStamp) {
+              appointmentMonthly +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+            if (d >= dateToFormat && d <= yearStamp) {
+              appointmentAnnual +=
+                appointment.description +
+                " " +
+                appointment.data +
+                " " +
+                appointment.numberCar +
+                " " +
+                appointment.nameUser +
+                " ";
+            }
+          }
+          return appointmentInformation;
+        });
+
         return (
           <tr key={manager.id}>
             <td style={{ whiteSpace: "nowrap" }}>{manager.name}</td>
@@ -140,6 +790,161 @@ class EmployeeList extends Component {
             <td>{manager.experience}</td>
             <td>{manager.experienceInCompany}</td>
             <td>{manager.role}</td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Weekly Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Weekly Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentWeekly}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Monthly Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Monthly Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentMonthly}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Annual Schedule{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Annual Schedule </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Appointment information</h1>
+                      <div className="textFrame">{appointmentAnnual}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
+            <td>
+              {" "}
+              <Popup
+                trigger={
+                  <Button color="info" className="button">
+                    {" "}
+                    Show Information{" "}
+                  </Button>
+                }
+                modal
+              >
+                {close => (
+                  <div className="carPopup">
+                    <a className="close" onClick={close}>
+                      &times;
+                    </a>
+                    <div className="header"> Employee Information </div>
+                    <div className="content">
+                      {" "}
+                      <h1>Name</h1>
+                      <div className="textFrame">{manager.name}</div>
+                      <h1>Surname</h1>
+                      <div className="textFrame">{manager.surname}</div>
+                      <h1>Experience</h1>
+                      <div className="textFrame">{manager.experience}</div>
+                      <h1>ExperienceInCompany</h1>
+                      <div className="textFrame">
+                        {manager.experienceInCompany}
+                      </div>
+                      <h1>Role</h1>
+                      <div className="textFrame">{manager.role}</div>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          console.log("popup windows closed ");
+                          close();
+                        }}
+                      >
+                        Close popup window
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </Popup>
+            </td>
             <td>
               <Button
                 size="md"
@@ -152,19 +957,50 @@ class EmployeeList extends Component {
             </td>
           </tr>
         );
+      }
     });
+
     const employeeList = employees.map(employee => {
-      let appointmentUser = "";
-      let appointmentCar = "";
-      let appointmentData = "";
-      let appointmentDescription = "";
+      let appointmentWeekly = "";
+      let appointmentMonthly = "";
+      let appointmentAnnual = "";
       const appointmentNote = appointments.map(appointment => {
         let appointmentInformation = "";
-        if (appointment.nameUser == employee.surname) {
-          appointmentDescription = appointment.description;
-          appointmentData = appointment.data;
-          appointmentCar = appointment.numberCar;
-          appointmentUser = appointment.nameUser;
+        let d = new Date(appointment.data);
+        if (appointment.nameUser === employee.surname) {
+          if (d >= dateToFormat && d <= weekStamp) {
+            appointmentWeekly +=
+              appointment.description +
+              " " +
+              appointment.data +
+              " " +
+              appointment.numberCar +
+              " " +
+              appointment.nameUser +
+              " ";
+          }
+          if (d >= dateToFormat && d <= monthStamp) {
+            appointmentMonthly +=
+              appointment.description +
+              " " +
+              appointment.data +
+              " " +
+              appointment.numberCar +
+              " " +
+              appointment.nameUser +
+              " ";
+          }
+          if (d >= dateToFormat && d <= yearStamp) {
+            appointmentAnnual +=
+              appointment.description +
+              " " +
+              appointment.data +
+              " " +
+              appointment.numberCar +
+              " " +
+              appointment.nameUser +
+              " ";
+          }
         }
         return appointmentInformation;
       });
@@ -175,6 +1011,114 @@ class EmployeeList extends Component {
           <td>{employee.experience}</td>
           <td>{employee.experienceInCompany}</td>
           <td>{employee.role}</td>
+          <td>
+            <Popup
+              trigger={
+                <Button color="info" className="button">
+                  {" "}
+                  Weekly Schedule{" "}
+                </Button>
+              }
+              modal
+            >
+              {close => (
+                <div className="carPopup">
+                  <a className="close" onClick={close}>
+                    &times;
+                  </a>
+                  <div className="header"> Weekly Schedule </div>
+                  <div className="content">
+                    {" "}
+                    <h1>Appointment information</h1>
+                    <div className="textFrame">{appointmentWeekly}</div>
+                  </div>
+                  <div className="actions">
+                    <Button
+                      className="button"
+                      onClick={() => {
+                        console.log("popup windows closed ");
+                        close();
+                      }}
+                    >
+                      Close popup window
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </Popup>
+          </td>
+          <td>
+            <Popup
+              trigger={
+                <Button color="info" className="button">
+                  {" "}
+                  Monthly Schedule{" "}
+                </Button>
+              }
+              modal
+            >
+              {close => (
+                <div className="carPopup">
+                  <a className="close" onClick={close}>
+                    &times;
+                  </a>
+                  <div className="header"> Monthly Schedule </div>
+                  <div className="content">
+                    {" "}
+                    <h1>Appointment information</h1>
+                    <div className="textFrame">{appointmentMonthly}</div>
+                  </div>
+                  <div className="actions">
+                    <Button
+                      className="button"
+                      onClick={() => {
+                        console.log("popup windows closed ");
+                        close();
+                      }}
+                    >
+                      Close popup window
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </Popup>
+          </td>
+          <td>
+            <Popup
+              trigger={
+                <Button color="info" className="button">
+                  {" "}
+                  Annual Schedule{" "}
+                </Button>
+              }
+              modal
+            >
+              {close => (
+                <div className="carPopup">
+                  <a className="close" onClick={close}>
+                    &times;
+                  </a>
+                  <div className="header"> Annual Schedule </div>
+                  <div className="content">
+                    {" "}
+                    <h1>Appointment information</h1>
+                    <div className="textFrame">{appointmentAnnual}</div>
+                  </div>
+                  <div className="actions">
+                    <Button
+                      className="button"
+                      onClick={() => {
+                        console.log("popup windows closed ");
+                        close();
+                      }}
+                    >
+                      Close popup window
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </Popup>
+          </td>
           <td>
             {" "}
             <Popup
@@ -206,12 +1150,6 @@ class EmployeeList extends Component {
                     </div>
                     <h1>Role</h1>
                     <div className="textFrame">{employee.role}</div>
-                    <h1>Appointments</h1>
-                    <h1>Appointment information</h1>
-                    <div className="textFrame">
-                      {appointmentCar} {appointmentData}{" "}
-                      {appointmentDescription}
-                    </div>
                   </div>
                   <div className="actions">
                     <Button
@@ -241,15 +1179,16 @@ class EmployeeList extends Component {
         </tr>
       );
     });
+
     const isRole = this.state.whichOne;
     let res;
-    if (isRole == "Manager") {
+    if (isRole === "Manager") {
       res = <tbody>{managerList}</tbody>;
-    } else if (isRole == "Mechanic") {
+    } else if (isRole === "Mechanic") {
       res = <tbody>{mechanicList}</tbody>;
-    } else if (isRole == "Logistician") {
+    } else if (isRole === "Logistician") {
       res = <tbody>{logisticianList}</tbody>;
-    } else if (isRole == "Accountant") {
+    } else if (isRole === "Accountant") {
       res = <tbody>{accountantList}</tbody>;
     } else res = <tbody>{employeeList}</tbody>;
     return (
