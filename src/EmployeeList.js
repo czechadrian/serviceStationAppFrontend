@@ -56,14 +56,14 @@ class EmployeeList extends Component {
       return <p>Loading...</p>;
     }
     const accountantList = employees.map(accountant => {
-      if (accountant.role == "Accountant")
+      if (accountant.setRole === "Accountant")
         return (
           <tr key={accountant.id}>
             <td style={{ whiteSpace: "nowrap" }}>{accountant.name}</td>
             <td>{accountant.surname}</td>
             <td>{accountant.experience}</td>
             <td>{accountant.experienceInCompany}</td>
-            <td>{accountant.role}</td>
+            <td>{accountant.setRole}</td>
             <td>
               <Button
                 size="md"
@@ -78,14 +78,14 @@ class EmployeeList extends Component {
         );
     });
     const logisticianList = employees.map(logistician => {
-      if (logistician.role == "Logistician")
+      if (logistician.setRole === "Logistician")
         return (
           <tr key={logistician.id}>
             <td style={{ whiteSpace: "nowrap" }}>{logistician.name}</td>
             <td>{logistician.surname}</td>
             <td>{logistician.experience}</td>
             <td>{logistician.experienceInCompany}</td>
-            <td>{logistician.role}</td>
+            <td>{logistician.setRole}</td>
             <td>
               <Button
                 size="md"
@@ -101,14 +101,14 @@ class EmployeeList extends Component {
     });
 
     const mechanicList = employees.map(mechanic => {
-      if (mechanic.role == "Mechanic")
+      if (mechanic.setRole === "Mechanic")
         return (
           <tr key={mechanic.id}>
             <td style={{ whiteSpace: "nowrap" }}>{mechanic.name}</td>
             <td>{mechanic.surname}</td>
             <td>{mechanic.experience}</td>
             <td>{mechanic.experienceInCompany}</td>
-            <td>{mechanic.role}</td>
+            <td>{mechanic.setRole}</td>
             <td>
               <Button
                 size="md"
@@ -123,14 +123,14 @@ class EmployeeList extends Component {
         );
     });
     const managerList = employees.map(manager => {
-      if (manager.role == "Manager")
+      if (manager.setRole === "Manager")
         return (
           <tr key={manager.id}>
             <td style={{ whiteSpace: "nowrap" }}>{manager.name}</td>
             <td>{manager.surname}</td>
             <td>{manager.experience}</td>
             <td>{manager.experienceInCompany}</td>
-            <td>{manager.role}</td>
+            <td>{manager.setRole}</td>
             <td>
               <Button
                 size="md"
@@ -151,7 +151,7 @@ class EmployeeList extends Component {
           <td>{employee.surname}</td>
           <td>{employee.experience}</td>
           <td>{employee.experienceInCompany}</td>
-          <td>{employee.role}</td>
+          <td>{employee.setRole}</td>
           <td>
             <Button
               size="md"
@@ -167,13 +167,13 @@ class EmployeeList extends Component {
     });
     const isRole = this.state.whichOne;
     let res;
-    if (isRole == "Manager") {
+    if (isRole === "Manager") {
       res = <tbody>{managerList}</tbody>;
-    } else if (isRole == "Mechanic") {
+    } else if (isRole === "Mechanic") {
       res = <tbody>{mechanicList}</tbody>;
-    } else if (isRole == "Logistician") {
+    } else if (isRole === "Logistician") {
       res = <tbody>{logisticianList}</tbody>;
-    } else if (isRole == "Accountant") {
+    } else if (isRole === "Accountant") {
       res = <tbody>{accountantList}</tbody>;
     } else res = <tbody>{employeeList}</tbody>;
     return (

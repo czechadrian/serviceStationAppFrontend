@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import AppNavbar from "./AppNavbar";
+//import Combobox from "react-widgets/lib/Combobox";
 
 class EmployeeEdit extends Component {
   emptyItem = {
     name: "",
     surname: "",
+    setRole: "",
     experience: "",
     experienceInCompany: "",
-    role: "",
-    idRole: "",
     login: "",
     password: ""
   };
@@ -86,7 +86,27 @@ class EmployeeEdit extends Component {
                 id="surname"
                 value={item.surname || ""}
                 onChange={this.handleChange}
-                autoComplete="surname-level1"
+                autoComplete="surname"
+              />
+            </FormGroup>
+            {/* <FormGroup>
+              var {Combobox} = ReactWidgets; var roles = ['Manager',
+              'Logistician', 'Mechanic', 'Accountant']; render(
+              <>
+                <Combobox data={roles} defaultValue={roles[2]} />
+              </>
+              ;
+            </FormGroup> */}
+
+            <FormGroup>
+              <Label for="setRole">Role</Label>
+              <Input
+                type="text"
+                name="setRole"
+                id="setRole"
+                value={item.setRole || ""}
+                onChange={this.handleChange}
+                autoComplete="setRole"
               />
             </FormGroup>
             <FormGroup>
@@ -109,17 +129,6 @@ class EmployeeEdit extends Component {
                 value={item.experienceInCompany || ""}
                 onChange={this.handleChange}
                 autoComplete="experienceInCompany"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="idRole">Id role</Label>
-              <Input
-                type="text"
-                name="idRole"
-                id="idRole"
-                value={item.idRole || ""}
-                onChange={this.handleChange}
-                autoComplete="idRole"
               />
             </FormGroup>
             <FormGroup>

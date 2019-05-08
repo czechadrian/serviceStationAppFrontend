@@ -50,7 +50,7 @@ class CarList extends Component {
       let serviceCosts = "";
       const repairNote = repairs.map(repair => {
         let repairInformation = "";
-        if (repair.numberCar == car.registrationNumber) {
+        if (repair.numberCar === car.registrationNumber) {
           repairInformation = repair.note;
           repairData = repair.data;
           repairCar = repair.numberCar;
