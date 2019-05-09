@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import AppNavbar from "./AppNavbar";
-//import Combobox from "react-widgets/lib/Combobox";
+
+import Combobox from "react-widgets/lib/Combobox";
+import "../node_modules/react-widgets/dist/css/react-widgets.css";
 
 class EmployeeEdit extends Component {
   emptyItem = {
@@ -61,6 +63,8 @@ class EmployeeEdit extends Component {
     const { item } = this.state;
     const title = <h2>{item.id ? "Edit Employee" : "Add Employee"}</h2>;
 
+    let roles = ["Manager", "Logistician", "Mechanic", "Accountant"];
+
     return (
       <div>
         <AppNavbar />
@@ -89,23 +93,15 @@ class EmployeeEdit extends Component {
                 autoComplete="surname"
               />
             </FormGroup>
-            {/* <FormGroup>
-              var {Combobox} = ReactWidgets; var roles = ['Manager',
-              'Logistician', 'Mechanic', 'Accountant']; render(
-              <>
-                <Combobox data={roles} defaultValue={roles[2]} />
-              </>
-              ;
-            </FormGroup> */}
-
             <FormGroup>
               <Label for="setRole">Role</Label>
-              <Input
+              <Combobox
                 type="text"
                 name="setRole"
                 id="setRole"
-                value={item.setRole || ""}
-                onChange={this.handleChange}
+                data={roles}
+                defaultValue={"Mechanic"}
+                onBlur={this.handleChange}
                 autoComplete="setRole"
               />
             </FormGroup>
@@ -145,7 +141,7 @@ class EmployeeEdit extends Component {
             <FormGroup>
               <Label for="password">Password</Label>
               <Input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 value={item.password || ""}
