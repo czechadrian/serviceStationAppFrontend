@@ -3,14 +3,16 @@ import { Link, withRouter } from "react-router-dom";
 import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import AppNavbar from "./AppNavbar";
 
+import Combobox from "react-widgets/lib/Combobox";
+import "../node_modules/react-widgets/dist/css/react-widgets.css";
+
 class EmployeeEdit extends Component {
   emptyItem = {
     name: "",
     surname: "",
+    setRole: "",
     experience: "",
     experienceInCompany: "",
-    role: "",
-    idRole: "",
     login: "",
     password: ""
   };
@@ -61,6 +63,8 @@ class EmployeeEdit extends Component {
     const { item } = this.state;
     const title = <h2>{item.id ? "Edit Employee" : "Add Employee"}</h2>;
 
+    let roles = ["Manager", "Logistician", "Mechanic", "Accountant"];
+
     return (
       <div>
         <AppNavbar />
@@ -86,7 +90,19 @@ class EmployeeEdit extends Component {
                 id="surname"
                 value={item.surname || ""}
                 onChange={this.handleChange}
-                autoComplete="surname-level1"
+                autoComplete="surname"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="setRole">Role</Label>
+              <Combobox
+                type="text"
+                name="setRole"
+                id="setRole"
+                data={roles}
+                defaultValue={"Mechanic"}
+                onBlur={this.handleChange}
+                autoComplete="setRole"
               />
             </FormGroup>
             <FormGroup>
@@ -112,17 +128,6 @@ class EmployeeEdit extends Component {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="idRole">Id role</Label>
-              <Input
-                type="text"
-                name="idRole"
-                id="idRole"
-                value={item.idRole || ""}
-                onChange={this.handleChange}
-                autoComplete="idRole"
-              />
-            </FormGroup>
-            <FormGroup>
               <Label for="login">Login</Label>
               <Input
                 type="text"
@@ -136,7 +141,7 @@ class EmployeeEdit extends Component {
             <FormGroup>
               <Label for="password">Password</Label>
               <Input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 value={item.password || ""}
