@@ -27,17 +27,17 @@ class Home extends Component {
   async componentDidMount() {
     const response = await fetch("/api/login", { credentials: "include" });
     const body = await response.text();
-    if (body === "") {
+    if (body == "") {
       this.setState({ isAuthenticated: false });
     } else {
       this.setState({ isAuthenticated: true, user: JSON.parse(body) });
-      if (this.state.user.role === "Manager") {
+      if (this.state.user.setRole === "Manager") {
         this.setState({ isManager: true });
-      } else if (this.state.user.role === "Logistician") {
+      } else if (this.state.user.setRole === "Logistician") {
         this.setState({ isLogistician: true });
-      } else if (this.state.user.role === "Accountant") {
+      } else if (this.state.user.setRole === "Accountant") {
         this.setState({ isAccountant: true });
-      } else if (this.state.user.role === "Mechanic") {
+      } else if (this.state.user.setRole === "Mechanic") {
         this.setState({ isMechanic: true });
       }
     }
@@ -45,7 +45,7 @@ class Home extends Component {
 
   login() {
     let port = window.location.port ? ":" + window.location.port : "";
-    if (port === ":3000") {
+    if (port == ":3000") {
       port = ":8080";
     }
     window.location.href = "//" + window.location.hostname + port + "/private";
@@ -58,7 +58,7 @@ class Home extends Component {
 
   render() {
     const message = this.state.user ? (
-      <h2>Welcome, {this.state.user.role}!</h2>
+      <h2>Welcome, {this.state.user.setRole}!</h2>
     ) : (
       <p>Please log in to Service Station App.</p>
     );
