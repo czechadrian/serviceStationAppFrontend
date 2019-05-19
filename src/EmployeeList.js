@@ -78,7 +78,7 @@ class EmployeeList extends Component {
           const appointmentNote = appointments.map(appointment => {
               let appointmentInformation = "";
               let d = new Date(appointment.data);
-              if (appointment.nameUser === accountant.surname) {
+              if (appointment.nameUser === employee.surname) {
                   if (d >= dateToFormat && d <= weekStamp) {
                       appointmentWeekly +=
                           appointment.description +
@@ -250,17 +250,17 @@ class EmployeeList extends Component {
                             <div className="content">
                                 {" "}
                                 <h1>Name</h1>
-                                <div className="textFrame">{accountant.name}</div>
+                                <div className="textFrame">{employee.name}</div>
                                 <h1>Surname</h1>
-                                <div className="textFrame">{accountant.surname}</div>
+                                <div className="textFrame">{employee.surname}</div>
                                 <h1>Experience</h1>
-                                <div className="textFrame">{accountant.experience}</div>
+                                <div className="textFrame">{employee.experience}</div>
                                 <h1>ExperienceInCompany</h1>
                                 <div className="textFrame">
-                                    {accountant.experienceInCompany}
+                                    {employee.experienceInCompany}
                                 </div>
                                 <h1>Role</h1>
-                                <div className="textFrame">{accountant.role}</div>
+                                <div className="textFrame">{employee.role}</div>
                             </div>
                             <div className="actions">
                                 <Button
@@ -302,7 +302,7 @@ class EmployeeList extends Component {
             const appointmentNote = appointments.map(appointment => {
                 let appointmentInformation = "";
                 let d = new Date(appointment.data);
-                if (appointment.nameUser === accountant.surname) {
+                if (appointment.nameUser === employee.surname) {
                     if (d >= dateToFormat && d <= weekStamp) {
                         appointmentWeekly +=
                             appointment.description +
