@@ -6,6 +6,8 @@ import CarList from "./CarList";
 import CarEdit from "./CarEdit";
 import EmployeeList from "./EmployeeList";
 import EmployeeEdit from "./EmployeeEdit";
+import Appointment from "./Appointment";
+import AppointmentEdit from "./AppointmentEdit";
 
 class App extends Component {
   render() {
@@ -17,6 +19,8 @@ class App extends Component {
           <Route path="/cars/:id" component={CarEdit} />
           <Route path="/employees" exact={true} component={EmployeeList} />
           <Route path="/employees/:id" component={EmployeeEdit} />
+          <Route path="/appointments" exact={true} component={Appointment} />
+          <Route path="/appointments/:id" component={AppointmentEdit} />
         </Switch>
       </Router>
     );
