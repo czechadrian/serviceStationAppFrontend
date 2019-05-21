@@ -8,6 +8,8 @@ import EmployeeList from "./EmployeeList";
 import EmployeeEdit from "./EmployeeEdit";
 import Appointment from "./Appointment";
 import AppointmentEdit from "./AppointmentEdit";
+import Repairs from "./Repairs";
+import RepairsEdit from "./RepairsEdit";
 
 class App extends Component {
   render() {
@@ -21,6 +23,8 @@ class App extends Component {
           <Route path="/employees/:id" component={EmployeeEdit} />
           <Route path="/appointments" exact={true} component={Appointment} />
           <Route path="/appointments/:id" component={AppointmentEdit} />
+          <Route path="/repairs" exact={true} component={Repairs} />
+          <Route path="/repairs/:id" component={RepairsEdit} />
         </Switch>
       </Router>
     );
