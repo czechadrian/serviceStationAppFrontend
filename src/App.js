@@ -10,6 +10,7 @@ import Appointment from "./Appointment";
 import AppointmentEdit from "./AppointmentEdit";
 import Repairs from "./Repairs";
 import RepairsEdit from "./RepairsEdit";
+import History from "./History";
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
           <Route path="/appointments/:id" component={AppointmentEdit} />
           <Route path="/repairs" exact={true} component={Repairs} />
           <Route path="/repairs/:id" component={RepairsEdit} />
+          <Route path="/histories" exact={true} component={History} />
         </Switch>
       </Router>
     );

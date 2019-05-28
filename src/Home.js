@@ -74,6 +74,9 @@ class Home extends Component {
         <Button color="link">
           <Link to="/appointments">Make an appointment</Link>
         </Button>
+        <Button color="link">
+          <Link to="/histories">History</Link>
+        </Button>
       </div>
     ) : (
       <div />
