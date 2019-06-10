@@ -77,6 +77,9 @@ class Home extends Component {
         <Button color="link">
           <Link to="/histories">History</Link>
         </Button>
+        <Button color="link">
+          <Link to="/search">Search repairs</Link>
+        </Button>
       </div>
     ) : (
       <div />
