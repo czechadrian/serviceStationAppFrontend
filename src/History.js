@@ -52,7 +52,7 @@ class History extends Component {
       );
     });
 
-    const historyList2 = histories.map(history => {
+    const historyList2 = filteredHistory.map(history => {
       if (
         (this.state.whichOne !== null) &
         (history.type === this.state.whichOne)
