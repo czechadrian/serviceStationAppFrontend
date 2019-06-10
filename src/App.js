@@ -11,6 +11,7 @@ import AppointmentEdit from "./AppointmentEdit";
 import Repairs from "./Repairs";
 import RepairsEdit from "./RepairsEdit";
 import History from "./History";
+import Search from "./Search";
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
           <Route path="/repairs" exact={true} component={Repairs} />
           <Route path="/repairs/:id" component={RepairsEdit} />
           <Route path="/histories" exact={true} component={History} />
+          <Route path="/search" exact={true} component={Search} />
         </Switch>
       </Router>
     );
