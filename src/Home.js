@@ -71,6 +71,12 @@ class Home extends Component {
         <Button color="link">
           <Link to="/employees">Employees service app</Link>
         </Button>
+        <Button color="link">
+          <Link to="/appointments">Make an appointment</Link>
+        </Button>
+        <Button color="link">
+          <Link to="/histories">History</Link>
+        </Button>
       </div>
     ) : (
       <div />
@@ -81,6 +87,9 @@ class Home extends Component {
         <Button color="link">
           <Link to="/cars">Car service app</Link>
         </Button>
+        <Button color="link">
+          <Link to="/appointments">Make an appointment</Link>
+        </Button>
       </div>
     ) : (
       <div />
@@ -88,7 +97,15 @@ class Home extends Component {
 
     const accountant = this.state.isAccountant ? <div /> : <div />;
 
-    const mechanic = this.state.isMechanic ? <div /> : <div />;
+    const mechanic = this.state.isMechanic ? (
+      <div>
+        <Button color="link">
+          <Link to="/repairs">Repairs</Link>
+        </Button>
+      </div>
+    ) : (
+      <div />
+    );
 
     const button = this.state.isAuthenticated ? (
       <div>
