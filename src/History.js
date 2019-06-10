@@ -2,12 +2,13 @@ import AppNavbar from "./AppNavbar";
 import { Button, ButtonGroup, Container, Table } from "reactstrap";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import SearchField from "react-search-field";
 
 class History extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { whichOne: "", histories: [], isLoading: true };
+    this.state = { search: "", whichOne: "", histories: [], isLoading: true };
   }
 
   componentDidMount() {
@@ -25,13 +26,21 @@ class History extends Component {
     this.setState({ whichOne: "Update" });
   }
 
+  onEnter(event) {
+    this.setState({ search: event });
+  }
+
   render() {
     const { histories, isLoading } = this.state;
+    let filteredHistory = histories.filter(item => {
+      return item.date.indexOf(this.state.search) !== -1;
+    });
+
     if (isLoading) {
       return <p>Loading...</p>;
     }
 
-    const historyList = histories.map(history => {
+    const historyList = filteredHistory.map(history => {
       return (
         <tr key={history.id}>
           <td style={{ whiteSpace: "nowrap" }}>{history.date}</td>
@@ -71,6 +80,12 @@ class History extends Component {
         <AppNavbar />
         <Container fluid>
           <div className="float-right">
+            <SearchField
+              placeholder="Search..."
+              onChange={this.onEnter.bind(this)}
+              searchText={this.state.search}
+              classNames="test-class"
+            />
             <Button color="info" onClick={this.addClick.bind(this)}>
               Search Add type
             </Button>
