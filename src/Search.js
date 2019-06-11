@@ -63,14 +63,13 @@ class Search extends Component {
           <Table className="mt-4">
             <thead>
               <tr>
-                <th width="17.5%">Date</th>
-                <th width="15%"> Time</th>
+                <th>Date</th>
+                <th width="17.5%">User</th>
+                <th width="15%"> Registration number</th>
 
-                <th width="15%">Description</th>
-                <th width="15%">Description</th>
-                <th width="20%">Description</th>
-
-                <th>Type</th>
+                <th width="15%">spares cost</th>
+                <th width="15%">service cost</th>
+                <th width="20%">note</th>
               </tr>
             </thead>
             {repairsList}
